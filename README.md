@@ -102,7 +102,7 @@ That doesn't make much sense, one is only born once, and you are generally in no
 Still, "Happy birthday to you" is actually in many versions.
 So, "Happy birthday to you" is what you will see...  But with a squiggle under birthday.
 Squiggles being the universal way of telling people something seems squiggly.
-You click/tab the squiggle and see there are two options.  You select the one you like.
+You click/tap the squiggle and see there are two options.  You select the one you like.
 This locks in the option.  (It also gives that option a positive weighting if you are sharing with others on a database.)
 Similarly, you will see a field in which you can write in what you think it is if neither fits.
 For example, maybe it's the day that people get out of your way and leave you alone.

@@ -1,3 +1,5 @@
+<!--
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +70,52 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+-->
+
+# What is this?
+
+This is my lyrics project.
+I have been wanting to make this for about 20 years.
+Wish me luck.
+
+## What does it do?
+
+So, right now it probably just stores some test lyrics.
+What I eventually want is that it connects to your database of lyrics (I'm not going to host it), or some database of your choosing.
+You should be able to add to this database.
+You should be able to modify this database.
+You should be able to call to this database.
+Someday, ideally, you'll have a music player playing on your device (computer, phone, etc.)
+This "app" will read the info being shared about the song being played.
+The "app" will display the lyrics.
+
+## How is this different from other lyrics app except you get to set a database of your choosing?
+
+Another feature I have envisioned for years is the ability to amalgamate a number of versions of the lyrics.
+Let's say there are multiple versions with a different word here or there.
+One version says the lyrics are "Happy mirthday to you."
+As in, there is a special occassion called a "mirthday" where one should be mirthful.
+And the speaker is trying to encourage one to have a happy mirthday, as it would be fitting.  Logical.
+But another version says the lyrics are "Happy birthday to you."
+That doesn't make much sense, one is only born once, and you are generally in no shape to enjoy, or be told to enjoy, that day.
+Still, "Happy birthday to you" is actually in many versions.
+So, "Happy birthday to you" is what you will see...  But with a squiggle under birthday.
+Squiggles being the universal way of telling people something seems squiggly.
+You click/tab the squiggle and see there are two options.  You select the one you like.
+This locks in the option.  (It also gives that option a positive weighting if you are sharing with others on a database.)
+Similarly, you will see a field in which you can write in what you think it is if neither fits.
+For example, maybe it's the day that people get out of your way and leave you alone.
+Maybe it's the day when people finally give you a wide berth.  Which would be joyous.
+So you click "birthday" and instead type in "berthday."
+That is now added to a version (your version) and it is possibly given weight.
+
+## Further enhancement?
+
+Sure, you could be given a rating as a lyrics provider or editor.
+This can be based on the number of times others (if you share the database) agree with your version.
+That could then increase your weighting.
+
+## What about AI, couldn't AI do an even better job at lyric providing/editing?
+
+Can we not talk about AI for once?  Just once.  Thanks.

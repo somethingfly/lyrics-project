@@ -1,18 +1,51 @@
 {
-  "songs": [
+  "lyrics": [
     {
-      "id": 23047788115960002986992256759661,
+      "id": 1,
       "song": "Test Song",
       "artist": "Test Artist",
-      "lyrics": [
-        [
-          "Hello",
-          "World"
-        ],
-        [
-          "Goodbye"
-        ]
+      "text": "[0:05] Hello World\n[0:07] GoodBye",
+      "length": 10000,
+      "lines": [
+        {
+          "time": 5000,
+          "words": [
+            "Hello",
+            "World"
+          ]
+        },
+        {
+          "time": 7000,
+          "words": [
+            "GoodBye"
+          ]
+        }
       ]
+    },
+    {
+      "song": "Test This",
+      "artist": "Testers",
+      "text": "[00:01] I still need\n[00:04] to build this",
+      "length": 8000,
+      "lines": [
+        {
+          "time": 1000,
+          "words": [
+            "I",
+            "still",
+            "need"
+          ]
+        },
+        {
+          "time": 4000,
+          "words": [
+            "to",
+            "bulid",
+            "this"
+          ]
+        }
+      ],
+      "id": 2
     }
   ]
 }

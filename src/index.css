@@ -1,3 +1,4 @@
+/*
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +11,141 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  background-color: #F4FDFF;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Playfair Display", serif;
+  margin-bottom: 1em;
+}
+
+p, img {
+  margin-bottom: 1em;
+}
+
+nav {
+  background-color: #F4FDFF;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1rem;
+  padding: 0.25rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  color: #6495ed;
+  border-bottom: 2px solid #6495ed;
+  transition: 0.1s;
+}
+
+nav a:hover,
+nav a:active {
+  color: lightblue;
+  border-bottom: 2px solid lightblue  ;
+}
+
+nav a.active {
+  color: white;
+  background: lightblue;
+}
+
+#home {
+  height: 50vh;
+  min-height: 400px;
+  background-color: #F4FDFF;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 1rem;
+}
+
+#about img {
+  max-height: 50%;
+}
+
+#about a {
+  display: block;
+}
+
+#lyrics {
+  background-color: #F4FDFF;
+  min-height: 400px;
+}
+
+#lyrics-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+}
+
+.lyrics-item {
+  background-color: white;
+  padding: 2rem;
+  margin: 1rem;
+}
+
+.lines span {
+  background-color: lightblue;
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.line {
+  text-align: left !important;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+}
+
+form > input,
+form > textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+form button {
+  padding: 0.5rem;
+  background-color: #6495ed;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+@media (min-width: 700px) {
+  #lyrics-list {
+    flex-direction: row;
+  }
+
+  .lyrics-item {
+    width: 75%;
+  }
 }

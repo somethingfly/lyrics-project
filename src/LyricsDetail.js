@@ -15,11 +15,20 @@ function LyricsDetail() {
 
     const { song, artist, length, lines } = lyrics;
 
+
+     function timeFormat(time) {
+        const startTime = 11 + ((time < 60 * 60000) ? 3 : 0);
+        const endTime = 23 - ((time % 1000 === 0) ? 4 : 0)
+       return new Date(time).toISOString().slice(startTime,endTime)
+    }
+    
+
+    
     const linesList = lines.map((line) => (
         <div className="lines" key={line.time}>
-          <div>{new Date(line.time).toISOString().slice(11,23)}</div>
+          <span>{timeFormat(line.time)}</span>
           {line.words.map((word, index) => (
-              <span key={line.time + index}>{word}</span>
+              <span key={line.time + index} className="lines-word">{word}</span>
           ))}
         </div>
         ));
@@ -29,8 +38,8 @@ function LyricsDetail() {
             <div className="lyrics-item">
                 <h1>{song}</h1>
                 <p>{artist}</p>
+                <p>{timeFormat(length)}</p>
                 <div>{linesList}</div>
-                <p>{new Date(length).toISOString().slice(11,23)}</p>
             </div>
         </section>
     );

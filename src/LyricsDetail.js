@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import LyricsWord from "./LyricsWord"
 
 function LyricsDetail() {
     const [lyrics, setLyrics] = useState(null);
@@ -15,8 +16,18 @@ function LyricsDetail() {
 
     const { song, artist, length, lines } = lyrics;
 
+    function changeLyrics(lineIndex, wordIndex, newWord) {
+      const newLyrics = lyrics
+      console.log(newLyrics.lines[lineIndex].words[wordIndex])
+      console.log(lineIndex, wordIndex, newWord)
+      newLyrics.lines[lineIndex].words[wordIndex] = newWord
+      console.log(newLyrics.lines[lineIndex].words[wordIndex])
+      setLyrics(newLyrics)
+      console.log(lyrics)
+    }
 
-     function timeFormat(time) {
+
+    function timeFormat(time) {
         const startTime = 11 + ((time < 60 * 60000) ? 3 : 0);
         const endTime = 23 - ((time % 1000 === 0) ? 4 : 0)
        return new Date(time).toISOString().slice(startTime,endTime)
@@ -24,11 +35,17 @@ function LyricsDetail() {
     
 
     
-    const linesList = lines.map((line) => (
+    const linesList = lines.map((line, lineIndex) => (
         <div className="lines" key={line.time}>
           <span>{timeFormat(line.time)}</span>
-          {line.words.map((word, index) => (
-              <span key={line.time + index} className="lines-word">{word}</span>
+          {line.words.map((word, wordIndex) => (
+            <LyricsWord
+              key={line.time + wordIndex}
+              word={word}
+              wordIndex={wordIndex}
+              lineIndex={lineIndex}
+              changeLyrics={changeLyrics}
+           />
           ))}
         </div>
         ));

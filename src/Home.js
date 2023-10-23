@@ -2,7 +2,7 @@ import React from "react";
 
 function Home() {
     return (
-        <section id="home">
+        <section id="home" className="default-container">
             <h1 style={{ color: "#6495ED" }}>
                 We Were Alone, and I Was Displaying These Lyrics, to You
             </h1>

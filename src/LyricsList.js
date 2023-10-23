@@ -22,7 +22,7 @@ function LyricsList() {
     ));
     
     return (
-        <section id="lyrics">
+        <section id="lyrics" className="default-container">
             <h2>My Lyrics</h2>
             <div id="lyrics-list">{lyricsItems}</div>
         </section>

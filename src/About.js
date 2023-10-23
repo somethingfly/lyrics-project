@@ -2,7 +2,7 @@ import React from "react";
 
 function About() {
     return (
-        <section id="about">
+        <section id="about" className="default-container">
             <h2>About Lyrics</h2>
             <p>
             Lyrics connects to your database of lyrics (we're not going to host it).<br />

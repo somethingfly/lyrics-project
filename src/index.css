@@ -77,9 +77,12 @@ section {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
   padding: 1rem;
   background-color: #f9fbff;
+}
+
+.default-container {
+  text-align: center;  
 }
 
 #about img {
@@ -110,7 +113,7 @@ section {
 }
 
 .lines {
-  text-align: left !important;
+  text-align: left;
 }
 
 .lines span {
@@ -122,10 +125,23 @@ section {
 
 .lines-word {
   background-color: lightblue;
+  cursor: pointer;
 }
 
-.lines {
-  text-align: left !important;
+#ui-button-container {
+  padding-top: 1rem;
+  margin: 1rem;
+  text-align: right;
+}
+
+.ui-button {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+  color: white;
+  background-color: rgb(100, 100, 255);
+  cursor: pointer;
 }
 
 form {

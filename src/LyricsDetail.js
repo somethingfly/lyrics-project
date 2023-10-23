@@ -1,63 +1,124 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LyricsWord from "./LyricsWord"
+import { useNavigate } from "react-router-dom";
 
 function LyricsDetail() {
     const [lyrics, setLyrics] = useState(null);
-    const { id } = useParams()
-    
+    const { id } = useParams();
+    const [modified, setModified] = useState("");
+    const navigate = useNavigate();
+    const lyricsOrig = {};
+
     useEffect(() => {
         fetch(`http://localhost:3001/lyrics/${id}`)
             .then(r => r.json())
-            .then(data => setLyrics(data))
+            .then(data => {
+                setLyrics(data);
+            })
     }, [id])
-    
-    if (!lyrics) return <h2>Loading...</h2>;
 
-    const { song, artist, length, lines } = lyrics;
+    if (!lyrics) return <h2>Loading...</h2>;
+    if (!lyricsOrig.song) {
+        console.log("happened")
+        Object.assign(lyricsOrig,lyrics)
+    }
+    
+    console.log({ lyrics, lyricsOrig})
 
     function changeLyrics(lineIndex, wordIndex, newWord) {
-      const newLyrics = lyrics
-      console.log(newLyrics.lines[lineIndex].words[wordIndex])
-      console.log(lineIndex, wordIndex, newWord)
-      newLyrics.lines[lineIndex].words[wordIndex] = newWord
-      console.log(newLyrics.lines[lineIndex].words[wordIndex])
-      setLyrics(newLyrics)
-      console.log(lyrics)
+        const newLyrics = lyrics;
+        newLyrics.lines[lineIndex].words[wordIndex] = newWord;
+        setModified("yes");
+        setLyrics(newLyrics);
     }
-
 
     function timeFormat(time) {
         const startTime = 11 + ((time < 60 * 60000) ? 3 : 0);
         const endTime = 23 - ((time % 1000 === 0) ? 4 : 0)
-       return new Date(time).toISOString().slice(startTime,endTime)
+        return new Date(time).toISOString().slice(startTime, endTime)
     }
-    
 
-    
-    const linesList = lines.map((line, lineIndex) => (
+    const linesList = lyrics.lines.map((line, lineIndex) => (
         <div className="lines" key={line.time}>
-          <span>{timeFormat(line.time)}</span>
-          {line.words.map((word, wordIndex) => (
-            <LyricsWord
-              key={line.time + wordIndex}
-              word={word}
-              wordIndex={wordIndex}
-              lineIndex={lineIndex}
-              changeLyrics={changeLyrics}
-           />
-          ))}
+            <span>{timeFormat(line.time)}</span>
+            {line.words.map((word, wordIndex) => (
+                <LyricsWord
+                    key={line.time + wordIndex}
+                    word={word}
+                    wordIndex={wordIndex}
+                    lineIndex={lineIndex}
+                    changeLyrics={changeLyrics}
+                />
+            ))}
         </div>
-        ));
+    ));
+
+    function onAdd() {
+        const text = lyrics.lines.map((line) => (
+            "[" + timeFormat(line.time) + "]" +
+            line.words.map((word) => (" " + word)) + "`n"))
+        const song = lyrics.song;
+        const artist = lyrics.artist;
+        const length = lyrics.length;
+        const lines = lyrics.lines;
+        const formData = { song, artist, text, length, lines }
+        fetch("http://localhost:3001/lyrics", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(r => r.json())
+            .then(data => {
+                setModified("");
+                navigate(`/lyrics/${data.id}`)
+            })
+    }
+
+    function onUpdate() {
+        const text = lyrics.lines.map((line) => (
+            "[" + timeFormat(line.time) + "]" +
+            line.words.map((word) => (" " + word)) + "`n"))
+            const formData = { ...lyrics, text }
+        fetch(`http://localhost:3001/lyrics/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(r => r.json())
+            .then(data => {
+                setModified("");
+                setLyrics(data)
+            })
+    }
+
+    let buttons = null
+
+    if (modified) {
+        buttons = (
+            <div id="ui-button-container">
+                <span className="ui-button" id="update" onClick={onUpdate}> Update </span>
+                <span className="ui-button" id="add" onClick={onAdd}> Add </span>
+            </div>
+        )
+    }
+
 
     return (
-        <section>
-            <div className="lyrics-item">
-                <h1>{song}</h1>
-                <p>{artist}</p>
-                <p>{timeFormat(length)}</p>
-                <div>{linesList}</div>
-            </div>
+        <section id="lyrics-detail">
+            <div className="lyrics-item">            
+                <div className="default-container">
+                    <h1>{lyrics.song}</h1>
+                    <p>{lyrics.artist}</p>
+                    <p>{timeFormat(lyrics.length)}</p>
+                    <div>{linesList}</div>
+                </div>
+                {buttons}
+           </div>
         </section>
     );
 }

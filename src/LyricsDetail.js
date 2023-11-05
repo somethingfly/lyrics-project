@@ -19,25 +19,36 @@ function LyricsDetail() {
     }, [id])
 
     if (!lyrics) return <h2>Loading...</h2>;
+
     if (!lyricsOrig.song) {
-        console.log("happened")
-        Object.assign(lyricsOrig,lyrics)
+        Object.assign(lyricsOrig,lyrics);
     }
-    
-    console.log({ lyrics, lyricsOrig})
 
     function changeLyrics(lineIndex, wordIndex, newWord) {
         const newLyrics = lyrics;
         newLyrics.lines[lineIndex].words[wordIndex] = newWord;
-        setModified("yes");
+        setModified("different");
         setLyrics(newLyrics);
+        return
     }
 
     function timeFormat(time) {
         const startTime = 11 + ((time < 60 * 60000) ? 3 : 0);
-        const endTime = 23 - ((time % 1000 === 0) ? 4 : 0)
+        const endTime = 23 - ((time % 1000 === 0) ? 4 : 0);
         return new Date(time).toISOString().slice(startTime, endTime)
     }
+
+    function textFormat() {
+        let text = "";
+        lyrics.lines.forEach((line, index) => {
+            text += "[" + timeFormat(line.time) + "]";
+            line.words.forEach((word) => (text += " " + word));
+            console.log(index, lyrics.lines.length);
+            text += (index < lyrics.lines.length - 1) ? "\n": "";
+        });
+        return text
+    }
+
 
     const linesList = lyrics.lines.map((line, lineIndex) => (
         <div className="lines" key={line.time}>
@@ -55,9 +66,7 @@ function LyricsDetail() {
     ));
 
     function onAdd() {
-        const text = lyrics.lines.map((line) => (
-            "[" + timeFormat(line.time) + "]" +
-            line.words.map((word) => (" " + word)) + "`n"))
+        const text = textFormat();
         const song = lyrics.song;
         const artist = lyrics.artist;
         const length = lyrics.length;
@@ -72,16 +81,14 @@ function LyricsDetail() {
         })
             .then(r => r.json())
             .then(data => {
-                setModified("");
+                setModified("added!");
                 navigate(`/lyrics/${data.id}`)
             })
     }
 
     function onUpdate() {
-        const text = lyrics.lines.map((line) => (
-            "[" + timeFormat(line.time) + "]" +
-            line.words.map((word) => (" " + word)) + "`n"))
-            const formData = { ...lyrics, text }
+        const text = textFormat();
+        const formData = { ...lyrics, text };
         fetch(`http://localhost:3001/lyrics/${id}`, {
             method: "PATCH",
             headers: {
@@ -91,18 +98,24 @@ function LyricsDetail() {
         })
             .then(r => r.json())
             .then(data => {
-                setModified("");
+                setModified("Updated!");
                 setLyrics(data)
             })
     }
 
     let buttons = null
 
-    if (modified) {
+    if (modified === "different") {
         buttons = (
             <div id="ui-button-container">
                 <span className="ui-button" id="update" onClick={onUpdate}> Update </span>
                 <span className="ui-button" id="add" onClick={onAdd}> Add </span>
+            </div>
+        )
+    } else if (modified) {
+        buttons = (
+            <div id="ui-button-container">
+                <span className="success"> {modified} </span>
             </div>
         )
     }

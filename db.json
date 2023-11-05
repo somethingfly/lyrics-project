@@ -25,10 +25,7 @@
     {
       "song": "Dude Keeps Callin Me",
       "artist": "The Ghosters",
-      "text": [
-        "[00:05] Excuse, me, while, I`n",
-        "[00:15] Block, the, sky`n"
-      ],
+      "text": "[00:05] Excuse me while I\n[00:15] Block the sky",
       "length": 45000,
       "lines": [
         {

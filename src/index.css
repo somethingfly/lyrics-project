@@ -144,6 +144,10 @@ section {
   cursor: pointer;
 }
 
+.success {
+  font-style: italic;
+}
+
 form {
   display: flex;
   flex-direction: column;

@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LyricsItem from "./LyricsItem";
 
-function LyricsList() {
-    const [lyrics, setLyrics] = useState([]);
-    
-    useEffect(() => {
-        fetch("http://localhost:3001/lyrics")
-            .then(r => r.json())
-            .then(data => setLyrics(data))
-    }, [])
-    
+function LyricsList({ lyrics }) {
+
     const lyricsItems = lyrics.map((lyrics) => (
         <LyricsItem
             key={lyrics.id}

@@ -4,7 +4,7 @@
       "id": 1,
       "song": "Test Song",
       "artist": "Test Artist",
-      "text": "[0:05] Hello World\n[0:07] GoodBye",
+      "text": "[00:05] Hello World\n[00:07] goodbye",
       "length": 10000,
       "lines": [
         {
@@ -17,12 +17,13 @@
         {
           "time": 7000,
           "words": [
-            "GoodBye"
+            "goodbye"
           ]
         }
       ]
     },
     {
+      "id": 2,
       "song": "Dude Keeps Callin Me",
       "artist": "The Ghosters",
       "text": "[00:05] Excuse me while I\n[00:15] Block the sky",
@@ -45,8 +46,7 @@
             "sky"
           ]
         }
-      ],
-      "id": 2
+      ]
     }
   ]
 }

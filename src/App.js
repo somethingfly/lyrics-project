@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Home from "./Home";
@@ -7,7 +8,6 @@ import LyricsDetail from "./LyricsDetail";
 import LyricsNew from "./LyricsNew";
 
 // constraining form, e.g. preLength on LyricsNew (must 00:00:00.000)
-// using text-align left important in css is a bit hackish.
 // Could put the POST form into App (previous commit shows how) for DRY
 // -- is in both LyricsDetail and LyricsNew
 // switch to user / client-side encryption for database?
@@ -26,16 +26,23 @@ import LyricsNew from "./LyricsNew";
 // tap on a word will highlight word, but highlight can be extended
 
 function App() {
-
+  const [lyrics, setLyrics] = useState([]);
+    
+  useEffect(() => {
+      fetch("http://localhost:3001/lyrics")
+          .then(r => r.json())
+          .then(data => setLyrics(data))
+  }, [])
+  
   return (
     <Router>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/lyrics" element={<LyricsList />} />
-        <Route path="/lyrics/new" element={<LyricsNew />} />
-        <Route path="/lyrics/:id" element={<LyricsDetail />} />
+        <Route path="/lyrics" element={<LyricsList lyrics={lyrics}/>} />
+        <Route path="/lyrics/new" element={<LyricsNew lyrics={lyrics} setLyrics={setLyrics}/>} />
+        <Route path="/lyrics/:id" element={<LyricsDetail lyrics={lyrics} setLyrics={setLyrics} />} />
         <Route path="*" element={<h1>404 not found</h1>} />
       </Routes>
     </Router>

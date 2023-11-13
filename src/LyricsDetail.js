@@ -3,32 +3,39 @@ import { useParams } from "react-router-dom";
 import LyricsWord from "./LyricsWord"
 import { useNavigate } from "react-router-dom";
 
-function LyricsDetail() {
-    const [lyrics, setLyrics] = useState(null);
+function LyricsDetail({lyrics, setLyrics}) {
+    const [songLyrics, setSongLyrics] = useState(null);
     const { id } = useParams();
     const [modified, setModified] = useState("");
     const navigate = useNavigate();
-    const lyricsOrig = {};
+    const songLyricsOrig = {};
 
+    /*
     useEffect(() => {
         fetch(`http://localhost:3001/lyrics/${id}`)
             .then(r => r.json())
             .then(data => {
-                setLyrics(data);
+                setSongLyrics(data);
             })
     }, [id])
+    */
 
-    if (!lyrics) return <h2>Loading...</h2>;
+    useEffect(() => {
+        const tempSongLyrics = lyrics.find(item => item.id === parseInt(id, 10));
+        setSongLyrics(tempSongLyrics);
+    }, [lyrics, id])
 
-    if (!lyricsOrig.song) {
-        Object.assign(lyricsOrig,lyrics);
+    if (!songLyrics) return <h2>Loading...</h2>;
+
+    if (!songLyricsOrig.song) {
+        Object.assign(songLyricsOrig,songLyrics);
     }
 
     function changeLyrics(lineIndex, wordIndex, newWord) {
-        const newLyrics = lyrics;
-        newLyrics.lines[lineIndex].words[wordIndex] = newWord;
+        const newSongLyrics = songLyrics;
+        newSongLyrics.lines[lineIndex].words[wordIndex] = newWord;
         setModified("different");
-        setLyrics(newLyrics);
+        setSongLyrics(newSongLyrics);
         return
     }
 
@@ -40,17 +47,16 @@ function LyricsDetail() {
 
     function textFormat() {
         let text = "";
-        lyrics.lines.forEach((line, index) => {
+        songLyrics.lines.forEach((line, index) => {
             text += "[" + timeFormat(line.time) + "]";
             line.words.forEach((word) => (text += " " + word));
-            console.log(index, lyrics.lines.length);
-            text += (index < lyrics.lines.length - 1) ? "\n": "";
+            text += (index < songLyrics.lines.length - 1) ? "\n": "";
         });
         return text
     }
 
 
-    const linesList = lyrics.lines.map((line, lineIndex) => (
+    const linesList = songLyrics.lines.map((line, lineIndex) => (
         <div className="lines" key={line.time}>
             <span>{timeFormat(line.time)}</span>
             {line.words.map((word, wordIndex) => (
@@ -67,10 +73,10 @@ function LyricsDetail() {
 
     function onAdd() {
         const text = textFormat();
-        const song = lyrics.song;
-        const artist = lyrics.artist;
-        const length = lyrics.length;
-        const lines = lyrics.lines;
+        const song = songLyrics.song;
+        const artist = songLyrics.artist;
+        const length = songLyrics.length;
+        const lines = songLyrics.lines;
         const formData = { song, artist, text, length, lines }
         fetch("http://localhost:3001/lyrics", {
             method: "POST",
@@ -82,13 +88,16 @@ function LyricsDetail() {
             .then(r => r.json())
             .then(data => {
                 setModified("added!");
+                const newLyrics = lyrics;
+                newLyrics.push(data);
+                setLyrics(newLyrics);
                 navigate(`/lyrics/${data.id}`)
             })
     }
 
     function onUpdate() {
         const text = textFormat();
-        const formData = { ...lyrics, text };
+        const formData = { ...songLyrics, text };
         fetch(`http://localhost:3001/lyrics/${id}`, {
             method: "PATCH",
             headers: {
@@ -99,7 +108,9 @@ function LyricsDetail() {
             .then(r => r.json())
             .then(data => {
                 setModified("Updated!");
-                setLyrics(data)
+                const updatedLyrics = lyrics.map((item) => (item.id === data.id) ? data : item);
+                setLyrics(updatedLyrics);
+                setSongLyrics(data);
             })
     }
 
@@ -125,9 +136,9 @@ function LyricsDetail() {
         <section id="lyrics-detail">
             <div className="lyrics-item">            
                 <div className="default-container">
-                    <h1>{lyrics.song}</h1>
-                    <p>{lyrics.artist}</p>
-                    <p>{timeFormat(lyrics.length)}</p>
+                    <h1>{songLyrics.song}</h1>
+                    <p>{songLyrics.artist}</p>
+                    <p>{timeFormat(songLyrics.length)}</p>
                     <div>{linesList}</div>
                 </div>
                 {buttons}

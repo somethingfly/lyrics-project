@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function LyricsNew() {
+function LyricsNew({ lyrics, setLyrics }) {
   const [formPreData, setFormPreData] = useState({
     song: "",
     artist: "",
@@ -55,7 +55,10 @@ function LyricsNew() {
     })
       .then(r => r.json())
       .then(data => {
-        navigate(`/lyrics/${data.id}`)
+        const newLyrics = lyrics;
+        newLyrics.push(data);
+        setLyrics(newLyrics);
+        navigate(`/lyrics/${data.id}`);
       })
   }
 

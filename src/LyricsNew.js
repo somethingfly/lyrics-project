@@ -55,8 +55,7 @@ function LyricsNew({ lyrics, setLyrics }) {
     })
       .then(r => r.json())
       .then(data => {
-        const newLyrics = lyrics;
-        newLyrics.push(data);
+        const newLyrics = [...lyrics, data];
         setLyrics(newLyrics);
         navigate(`/lyrics/${data.id}`);
       })
